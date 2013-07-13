@@ -154,6 +154,8 @@ class NativeType(object):
                 nt.is_enum = ntype.get_canonical().kind == cindex.TypeKind.ENUM
                 if nt.name == "std::function":
                     decl = ntype.get_canonical().get_declaration()
+                    nt.namespaced_name = namespaced_name(decl)
+
                     r = re.compile('function<(\S+) \((.*)\)>').search(decl.displayname)
                     (ret_type, params) = r.groups()
                     params = filter(None, params.split(", "))
