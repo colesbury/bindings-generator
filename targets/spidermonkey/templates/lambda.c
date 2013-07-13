@@ -7,7 +7,7 @@ do {
 		#while $count < $arg_count
 			#set $arg = $param_types[$count]
 		${arg.from_native({"generator": $generator,
-							 "in_value": "argv[" + str(count) + "]",
+							 "in_value": "larg" + str(count),
 							 "out_value": "largv[" + str(count) + "]",
 							 "class_name": $class_name,
 							 "level": 2,

@@ -172,6 +172,9 @@ class NativeType(object):
 
     @staticmethod
     def from_string(displayname):
+        displayname = displayname.replace("cocos2d::", "")
+        displayname = displayname.replace(" *", "*")
+
         nt = NativeType()
         nt.name = displayname
         nt.namespaced_name = displayname
