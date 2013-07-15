@@ -16,7 +16,9 @@ do {
 		#end while
 		jsval rval;
 		JSBool ok = func->invoke(${arg_count}, &largv[0], rval);
-		JSB_PRECONDITION2(ok, cx,, "Error invoking callback");
+		if (!ok && JS_IsExceptionPending(cx)) {
+			JS_ReportPendingException(cx);
+		}
 		#if $ret_type.name != "void"
 		${ret_type} ret;
 		${ret_type.to_native({"generator": $generator,
