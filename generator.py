@@ -159,12 +159,12 @@ class NativeType(object):
                     decl = ntype.get_canonical().get_declaration()
                     nt.namespaced_name = namespaced_name(decl)
 
-                    r = re.compile('function<(\S+) \((.*)\)>').search(decl.displayname)
+                    r = re.compile('function<(.+)\((.*)\)>').search(decl.displayname)
                     (ret_type, params) = r.groups()
                     params = filter(None, params.split(", "))
 
                     nt.is_function = True
-                    nt.ret_type = NativeType.from_string(ret_type)
+                    nt.ret_type = NativeType.from_string(ret_type.strip())
                     nt.param_types = [NativeType.from_string(string) for string in params]
 
         # mark argument as not supported
@@ -709,7 +709,7 @@ class Generator(object):
             print "%s. <severity = %s,\n    location = %r,\n    details = %r>" % (
                 idx+1, severities[d.severity], d.location, d.spelling)
         print("====\n")
-        
+
     def _parse_headers(self):
         for header in self.headers:
             tu = self.index.parse(header, self.clang_args)
